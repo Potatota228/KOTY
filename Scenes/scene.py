@@ -1,13 +1,12 @@
-# class Scene():
-#     def __init__(self, director):
-#         self.director = director
-
-#     def get_screen(self):
-#         """Получить экран из директора"""
-#         return self.director.get_screen()
+class Scene:
+    def __init__(self, manager):
+        self.manager = manager
     
-#     def on_update(self):
-#         raise NotImplementedError("on_update abstract method must be defined in subclass.")
- 
-#     def on_event(self, event):
-#         raise NotImplementedError("on_event abstract method must be defined in subclass.")
+    def handle_events(self, events):
+        pass
+    
+    def update(self, dt):
+        pass
+    
+    def render(self, screen):
+        pass
