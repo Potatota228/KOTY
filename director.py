@@ -6,7 +6,7 @@ from Scenes import *
 class Director():
     def __init__(self):
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
-        self.scene = None
+        self.current_scene = None
         self.running = True
         self.clock = pg.time.Clock()
         self.FPS = FPS
@@ -37,7 +37,6 @@ class Director():
             self.current_scene.handle_events(events)
             self.current_scene.update(dt)
             self.current_scene.render(self.screen)
-            
             pg.display.flip()
         
         pg.quit()

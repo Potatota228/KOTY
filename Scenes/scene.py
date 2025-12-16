@@ -1,6 +1,6 @@
 class Scene:
-    def __init__(self, manager):
-        self.manager = manager
+    def __init__(self, director):
+        self.director = director
     
     def handle_events(self, events):
         pass
