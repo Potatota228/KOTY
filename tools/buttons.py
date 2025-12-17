@@ -1,7 +1,7 @@
 import pygame as pg
 from config import BLACK
 class Button():
-    def __init__(self, x, y, image, scale, text, font, text_color= BLACK):
+    def __init__(self, x, y, image, scale, text, font, text_color = BLACK):
         width = image.get_width()
         height = image.get_height()
         self.image = pg.transform.scale(image, (int(width * scale), int(height * scale)))
