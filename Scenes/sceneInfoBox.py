@@ -9,7 +9,7 @@ class InfoBoxScene(Scene):
         try:
             bt_path = "./images/buttons/button.png"
             bt_img = pg.image.load(bt_path).convert_alpha()
-            self.bt_back = Button(50, 500, bt_img, 1, "Back", font)
+            self.bt_back = Button(50, 600, bt_img, 1, "Back", font)
             
         except Exception as e:
             print("Не удалось загрузить кнопки:", e)
