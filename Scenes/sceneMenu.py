@@ -31,6 +31,5 @@ class MenuScene(Scene):
         screen.blit(self.bg_image, self.bg_rect)
         if self.bt_start.draw(screen):
             self.director.switch_scene("creation")
-        self.bt_start.blit(self.text, (0, 0))
         
 

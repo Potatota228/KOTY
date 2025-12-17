@@ -1,33 +1,34 @@
 import pygame as pg
-
+from config import BLACK
 class Button():
-	def __init__(self, x, y, image, scale, text, font):
-		width = image.get_width()
-		height = image.get_height()
-		self.image = pg.transform.scale(image, (int(width * scale), int(height * scale)))
-		self.rect = self.image.get_rect()
-		self.rect.topleft = (x, y)
-		self.clicked = False
-		self.action = False
-		self.text = "text"
-		self.font = font
-		self.text_surf = self.font.render(self.text, True)
-		self.text_rect = self.text_surf.get_rect(center=self.rect.center)
+    def __init__(self, x, y, image, scale, text, font, text_color= BLACK):
+        width = image.get_width()
+        height = image.get_height()
+        self.image = pg.transform.scale(image, (int(width * scale), int(height * scale)))
+        self.rect = self.image.get_rect(topleft=(x, y))
+        self.clicked = False
+        self.text = text
+        self.font = font
+        self.text_color = text_color
+        self.text_surf = self.font.render(self.text, True, self.text_color)
+        self.text_rect = self.text_surf.get_rect(center=self.rect.center)
 
-	def draw(self, surface):
-		action = False
-		#get mouse position
-		pos = pg.mouse.get_pos()
+    def draw(self, surface):
+        action = False
+        pos = pg.mouse.get_pos()
 
-		#check mouseover and clicked conditions
-		if self.rect.collidepoint(pos):
-			if pg.mouse.get_pressed()[0] == 1 and self.clicked == False:
-				self.clicked = True
-				action = True
+        if self.rect.collidepoint(pos):
+            if pg.mouse.get_pressed()[0] and not self.clicked:
+                self.clicked = True
+                action = True
 
-		if pg.mouse.get_pressed()[0] == 0:
-			self.clicked = False
+        if not pg.mouse.get_pressed()[0]:
+            self.clicked = False
 
-		#draw button on screen
-		surface.blit(self.image, (self.rect.x, self.rect.y))
-		return action
+        # пересчитываем центр текста
+        self.text_rect = self.text_surf.get_rect(center=self.rect.center)
+
+        surface.blit(self.image, self.rect)
+        surface.blit(self.text_surf, self.text_rect)
+
+        return action

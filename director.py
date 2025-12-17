@@ -36,7 +36,7 @@ class Director():
             
             self.current_scene.handle_events(events)
             self.current_scene.update(dt)
-            self.current_scene.render(self.screen, self.font)
+            self.current_scene.render(self.screen)
             pg.display.flip()
         
         pg.quit()
