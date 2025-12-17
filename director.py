@@ -1,24 +1,25 @@
 import pygame as pg
 import sys
 import time
-from config import WIDTH, HEIGHT, FPS
-from Scenes import *
 class Director():
     def __init__(self):
+        pg.init()
+        pg.mixer.init()
+
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
+        pg.display.set_caption("KOTY")
+
         self.current_scene = None
         self.running = True
         self.clock = pg.time.Clock()
         self.FPS = FPS
+
         self.scenes = {
             "menu": MenuScene(self),
             "creation": CreationScene(self),
         }
-        pg.init()
-        pg.mixer.init()
-        pg.display.set_caption("KOTY")
-        self.current_scene = self.scenes["menu"]
 
+        self.current_scene = self.scenes["menu"]
     def switch_scene(self, scene_name):
         if scene_name in self.scenes:
             self.current_scene = self.scenes[scene_name]
@@ -41,4 +42,3 @@ class Director():
         
         pg.quit()
         sys.exit()
-    
