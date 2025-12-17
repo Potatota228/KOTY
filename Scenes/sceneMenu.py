@@ -1,11 +1,10 @@
 import pygame as pg
 from .scene import Scene
-from config import BLUE
+from config import BLUE, font
 from tools.buttons import Button
 class MenuScene(Scene):
     def __init__(self, director):
         super().__init__(director)
-        font = pg.font.Font("Comic Sans MS.ttf", 32)
         try:
             bg_path = "./images/menu.png"
             self.bg_image = pg.image.load(bg_path).convert_alpha()
