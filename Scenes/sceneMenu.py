@@ -16,6 +16,7 @@ class MenuScene(Scene):
             bt_path = "./images/buttons/button.png"
             bt_img = pg.image.load(bt_path).convert_alpha()
             self.bt_start = Button(50, 400, bt_img, 1, "text", font)
+            self.bt_infobox = Button(50, 500, bt_img, 1, "text", font)
         except Exception as e:
             print("Не удалось загрузить кновки:", e)
             self.bg_image = None
@@ -30,5 +31,7 @@ class MenuScene(Scene):
         screen.blit(self.bg_image, self.bg_rect)
         if self.bt_start.draw(screen):
             self.director.switch_scene("creation")
+        if self.bt_infobox.draw(screen):
+            self.director.switch_scene("infobox")
         
 

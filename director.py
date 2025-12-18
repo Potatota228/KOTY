@@ -13,6 +13,7 @@ class Director():
         self.scenes = {
             "menu": MenuScene(self),
             "creation": CreationScene(self),
+            "infobox": InfoBoxScene(self)
         }
         pg.init()
         pg.mixer.init()
