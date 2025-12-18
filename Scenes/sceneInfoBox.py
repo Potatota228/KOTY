@@ -1,7 +1,8 @@
 import pygame as pg
 from Scenes.scene import Scene
 from config import WHITE, font
-from tools.buttons import Button
+from tools.button import Button
+
 class InfoBoxScene(Scene):
     def __init__(self, director):
         super().__init__(director)
@@ -9,7 +10,8 @@ class InfoBoxScene(Scene):
         try:
             bt_path = "./images/buttons/button.png"
             bt_img = pg.image.load(bt_path).convert_alpha()
-            self.bt_back = Button(50, 600, bt_img, 1, "Back", font)
+            # Добавляем center=False
+            self.bt_back = Button(50, 600, bt_img, 1, "Back", font, center=False)
             
         except Exception as e:
             print("Не удалось загрузить кнопки:", e)
@@ -18,7 +20,7 @@ class InfoBoxScene(Scene):
     def handle_events(self, events):
         for event in events:
             if event.type == pg.KEYDOWN:
-                if event.key == pg.K_SPACE:  # или любая клавиша
+                if event.key == pg.K_SPACE:
                     self.director.switch_scene("menu")
     
     def render(self, screen):
@@ -28,4 +30,4 @@ class InfoBoxScene(Scene):
 
     def cleanup(self):
         self.buttons.clear()
-        self.bt_start = None
+        self.bt_back = None  # Исправлено с bt_start на bt_back

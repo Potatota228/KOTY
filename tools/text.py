@@ -1,4 +1,3 @@
-import pygame as pg
 from config import BROWN
 
 class Text():
