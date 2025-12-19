@@ -1,7 +1,8 @@
 import pygame as pg
 from Scenes.scene import Scene
 from config import BEIGE, BROWN
-from tools.text_box import Text_box
+from tools.text import Text
+from tools.input_box import Input_box
 
 class CreationScene(Scene):
     """Сцена создания клана"""
@@ -14,25 +15,34 @@ class CreationScene(Scene):
         """Настройка UI элементов"""
         # Загружаем изображения из менеджера ресурсов
         self.bg_img = self.resource_manager.get_image("clan_four_light")
-        if self.bg_img:
-            self.bg_img.set_colorkey(BROWN)
-            self.bg_rect = self.bg_img.get_rect()
-        else:
-            self.bg_rect = None
+        self.bg_rect = self.bg_img.get_rect() if self.bg_img else None
+    
         
-        self.frame_img = self.resource_manager.get_image("clan_name_frame")
-        self.frame_rect = self.frame_img.get_rect() if self.frame_img else None
+        self.frame_img_bg = self.resource_manager.get_image("basic_frame")
+        self.frame_bg_rect = self.frame_img_bg.get_rect() if self.frame_img_bg else None
         
         # Получаем шрифт
-        font = self.resource_manager.get_font("main", 20)
+        font = self.resource_manager.get_font("main", 15)
         
         # Создаём текстовое поле
-        self.title = Text_box(
-            self.frame_img, 
+        self.title = Text(
             400, 100, 
-            "Привет, мир!", 
-            font, 
-            text_color=(255, 255, 255)
+            "StarClan is looking down upon you...", 
+            font,
+            text_color= BROWN
+        )
+        self.title2 = Text(
+            400, 150, 
+            "What is your name?", 
+            font,
+            text_color= BROWN
+        )
+        f_img = self.resource_manager.get_image("clan_name_frame")
+
+        self.input_box = Input_box(
+            f_img, 400, 200, 
+            font,
+            text_color= BROWN
         )
     
     def on_enter(self):
@@ -50,21 +60,27 @@ class CreationScene(Scene):
     
     def update(self, dt):
         """Обновление логики"""
-        pass
+        # self.input_box.update
+        # self.input_box.update_text
+        # self.input_box._update_text_surface
     
     def render(self, screen):
         """Отрисовка сцены"""
         screen.fill(BEIGE)
-        
+        self.input_box
+
+        if self.frame_img_bg and self.frame_bg_rect:
+            self.frame_bg_rect.bottom = screen.get_height()
+            screen.blit(self.frame_img_bg, self.frame_bg_rect)
         # Рисуем фон снизу
         if self.bg_img and self.bg_rect:
             self.bg_rect.bottom = screen.get_height()
             screen.blit(self.bg_img, self.bg_rect)
         
-        # Рисуем рамку сверху
-        if self.frame_img and self.frame_rect:
-            self.frame_rect.top = screen.get_height() - 10
-            screen.blit(self.frame_img, self.frame_rect)
         
         # Рисуем текстовое поле
         self.title.draw(screen)
+        self.title2.draw(screen)
+        self.input_box.enable()
+        self.input_box.draw(screen)
+

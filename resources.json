@@ -1,0 +1,50 @@
+{
+  "images": {
+    "menu_bg": {
+      "path": "./images/menu.png",
+      "convert_alpha": true,
+      "colorkey": null
+    },
+    "button": {
+      "path": "./images/buttons/button.png",
+      "convert_alpha": true,
+      "colorkey": null
+    },
+    "clan_four_light": {
+      "path": "./images/clan_four_light.png",
+      "convert_alpha": true,
+      "colorkey": null
+    },
+    "clan_name_frame": {
+      "path": "./images/clan_name_frame.png",
+      "convert_alpha": true,
+      "colorkey": null
+    },
+    "basic_frame":{
+      "path": "./images/frame_all.png",
+      "convert_alpha": false,
+      "colorkey": null
+    }
+  },
+  "fonts": {
+    "main": {
+      "path": "HUDSonicX1-Regular.otf",
+      "sizes": [16, 20, 24, 32]
+    }
+  },
+  "sounds": {
+    "button_click": {
+      "path": "./sounds/click.wav",
+      "volume": 0.5
+    },
+    "background_music": {
+      "path": "./sounds/menu_music.mp3",
+      "volume": 0.3
+    }
+  },
+  "settings": {
+    "image_placeholder_size": [100, 100],
+    "image_placeholder_color": [255, 0, 255],
+    "default_font_size": 20
+  }
+}
