@@ -10,6 +10,16 @@
       "convert_alpha": true,
       "colorkey": null
     },
+    "arr_l": {
+      "path": "./images/buttons/arrow_left_fancy.png",
+      "convert_alpha": true,
+      "colorkey": null
+    },
+    "arr_r": {
+      "path": "./images/buttons/arrow_right_fancy.png",
+      "convert_alpha": true,
+      "colorkey": null
+    },
     "clan_four_light": {
       "path": "./images/clan_four_light.png",
       "convert_alpha": true,

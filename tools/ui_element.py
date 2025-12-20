@@ -34,7 +34,7 @@ class UIElement:
         # Анимация (альфа канал)
         self.alpha = 255
         self.target_alpha = 255
-        self.fade_speed = 5
+        self.fade_speed = 255
     
     @property
     def state(self):
