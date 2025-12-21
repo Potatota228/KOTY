@@ -2,33 +2,31 @@ from typing import Dict, Any, Optional, List
 from cat.cat import Cat
 class NPC_Cat(Cat):
     def __init__(
-            self,
-            cat_id: Optional[int] = None, #Эта запись значит что может быть либо int либо None
-            postfix: str = "",
-            suffix: str = "",
-            name: str = "",
-            age: Optional[int] = None,
-            alive: Optional[bool] = None,
-            alliance: Optional[str] = None,
-            rank: Optional[str] = None,
-            social_opinion: Optional[int] = None,
-            pelt: Optional[str] = None,
-            color: Optional[str] = None,
-            eyes: Optional[str] = None,
-            first_trait: Optional[str] = None,
-            second_trait: Optional[str] = None,
-            first_skill: Optional[str] = None,
-            second_skill: Optional[str] = None,
-            parents_ids: Optional[List[int]] = None,
-            kits_ids: Optional[List[int]] = None,
-            relationship: int = 0 #Отношение к гг
+        self,
+        cat_id: Optional[int] = None,
+        postfix: str = "",
+        suffix: str = "",
+        age: Optional[int] = None,
+        alive: Optional[bool] = None,
+        alliance: Optional[str] = None,
+        rank: Optional[str] = None,
+        social_opinion: Optional[int] = None,
+        pelt: Optional[str] = None,
+        color: Optional[str] = None,
+        eyes: Optional[str] = None,
+        first_trait: Optional[str] = None,
+        second_trait: Optional[str] = None,
+        first_skill: Optional[str] = None,
+        second_skill: Optional[str] = None,
+        parents_ids: Optional[List[int]] = None,
+        kits_ids: Optional[List[int]] = None,
+        relationship: int = 0 #Отношение к гг
             #Потом как то добавлять отношения между всеми котами? Нужно ли это делать? Система в clangen слишком сложная, надо упрощать 
         ):
         super().__init__(
             cat_id=cat_id,
             postfix=postfix,
             suffix=suffix,
-            name=name,
             age=age,
             alive=alive,
             alliance=alliance,
@@ -43,9 +41,8 @@ class NPC_Cat(Cat):
             second_skill=second_skill,
             parents_ids=parents_ids,
             kits_ids=kits_ids
-
         )
-        self.relationship = 0
+        self.relationship = relationship
 
 
     def to_dict(self) -> Dict[str, Any]:
@@ -58,8 +55,6 @@ class NPC_Cat(Cat):
         
         # Добавляем специфичные для NPC поля
         data.update({
-            "status": self.status,
-            "personality": self.personality,
             "relationship": self.relationship
         })
         
@@ -80,7 +75,6 @@ class NPC_Cat(Cat):
             cat_id=data.get("id"),
             postfix=data.get("postfix"),
             suffix=data.get("suffix"),
-            name=data.get("name"),
             age=data.get("age"),
             alive=data.get("alive"),
             alliance=data.get("alliance"),
@@ -91,7 +85,7 @@ class NPC_Cat(Cat):
             eyes=data.get("eyes"),
             first_trait=data.get("first_trait"),
             second_trait=data.get("second_trait"),
-            first_skill=data.get("skill"),
+            first_skill=data.get("first_skill"),
             second_skill=data.get("second_skill"),
             parents_ids=data.get("parents_ids"),
             kits_ids=data.get("kits_ids"),
@@ -102,6 +96,7 @@ class NPC_Cat(Cat):
     #Добавить изменения относительно родственных связей
     def change_relationship_with_mc(self, amount):
         self.relationship += amount
+        self.relationship = max(-100, min(100, self.relationship))
 
     def get_relationship_status_with_mc(self):
         if self.relationship >= 75:
@@ -118,3 +113,13 @@ class NPC_Cat(Cat):
             return "враждебный"
         else:
             return "заклятый враг"
+    def get_description(self) -> str:
+        """
+        Получить описание NPC с информацией об отношении
+        
+        Returns:
+            Расширенное описание NPC
+        """
+        desc = super().get_description()
+        desc += f"\n  Отношение к ГГ: {self.relationship} ({self.get_relationship_status_with_mc()})"
+        return desc

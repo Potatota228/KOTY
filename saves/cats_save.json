@@ -1,0 +1,55 @@
+{
+  "version": "1.0",
+  "player_id": 1,
+  "cats": [
+    {
+      "id": 1,
+      "type": "MC_Cat",
+      "postfix": "",
+      "suffix": "",
+      "name": "",
+      "age": 179,
+      "alive": true,
+      "alliance": "KITTYPET",
+      "rank": "kittypet",
+      "social_opinion": 28,
+      "pelt": "tabby",
+      "color": "orange",
+      "eyes": "green",
+      "first_trait": "Patient",
+      "second_trait": "Cowardly",
+      "first_skill": "Endures cold well",
+      "second_skill": null,
+      "parents_ids": [],
+      "kits_ids": [],
+      "skills": {
+        "hunting": 0,
+        "fighting": 0,
+        "healing": 0,
+        "stealth": 0
+      }
+    },
+    {
+      "id": 2,
+      "type": "NPC_Cat",
+      "postfix": "",
+      "suffix": "",
+      "name": "",
+      "age": 37,
+      "alive": true,
+      "alliance": "KITTYPET",
+      "rank": "kittypet",
+      "social_opinion": -20,
+      "pelt": "spotted",
+      "color": "cream",
+      "eyes": "green",
+      "first_trait": "Observant",
+      "second_trait": "Cowardly",
+      "first_skill": "Endures cold well",
+      "second_skill": "Sees things others cannot see",
+      "parents_ids": [],
+      "kits_ids": [],
+      "relationship": 0
+    }
+  ]
+}

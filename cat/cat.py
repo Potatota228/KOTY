@@ -90,7 +90,7 @@ class Cat:
     SKILLS_2 = [
         "Connection to Starclan",
         "Connection to Dark Forest",
-        "Sees things others cannot see"
+        "Sees things others cannot see",
         "Prophesying"
     ]
     
@@ -118,17 +118,23 @@ class Cat:
         parents_ids: Optional[List[int]] = None,
         kits_ids: Optional[List[int]] = None
     ):
-        # ID кота (уникальный идентификатор)
         if cat_id is None:
             self.id = Cat._next_id
             Cat._next_id += 1
         else:
             self.id = cat_id
-            # Обновляем счётчик если загрузили кота с большим ID
             if cat_id >= Cat._next_id:
                 Cat._next_id = cat_id + 1
         
-        # Обязательные параметры (если не указаны - генерируем случайно)
+        # СНАЧАЛА базовые атрибуты
+        self.age = age if age else random.randint(0, 180)
+        self.alive = alive if alive else True
+        
+        # ПОТОМ методы, которые их используют
+        self.alliance = self.set_alliance(alliance)
+        self.rank = self.set_rank(rank)
+        
+        # Остальное
         self.pelt = pelt if pelt else random.choice(Cat.PELT_TYPES)
         self.color = color if color else random.choice(Cat.COLORS)
         self.eyes = eyes if eyes else random.choice(Cat.EYE_COLORS)
@@ -136,18 +142,16 @@ class Cat:
         self.second_trait = second_trait if second_trait else random.choice(Cat.TRAITS_2)
         self.first_skill = first_skill if first_skill else random.choice(Cat.SKILLS_1)
         
-        if second_skill: #Дает второй скилл с шансом 1/15
+        if second_skill:
             self.second_skill = second_skill 
         elif chance(15):
             self.second_skill = random.choice(Cat.SKILLS_2)
-
-        self.social_opinion = social_opinion if social_opinion else random.randint(-100,100)
-        self.age = age if age else random.randint(0,180)
-        self.alive = alive if alive else True #bool
-        self.alliance = self.set_alliance(alliance)
-        self.rank = self.set_rank(rank)
-
-        # Имя кота
+        else:
+            self.second_skill = None  # Явно указать None
+        
+        self.social_opinion = social_opinion if social_opinion else random.randint(-100, 100)
+        
+        # Имя
         self.postfix = postfix
         self.suffix = suffix
         if "kitten" in self.rank:
@@ -155,11 +159,11 @@ class Cat:
         elif "apprentice" in self.rank:
             self.name = f"{postfix}paw"
         elif "leader" in self.rank:
-            self.name = f"{postfix} Star"
+            self.name = f"{postfix}Star"
         else:
             self.name = f"{postfix}{suffix}"
         
-        # Родственные связи (ID других котов)
+        # Родственные связи
         self.parents_ids = parents_ids if parents_ids else []
         self.kits_ids = kits_ids if kits_ids else []
     
@@ -181,26 +185,26 @@ class Cat:
             Словарь с данными кота
         """
         data = {
-            "id": self.id,
-            "type": self.__class__.__name__,  # Тип класса (Cat, PlayerCat, NPC_Cat)
-            "postfix": self.postfix,
-            "suffix": self.suffix,
-            "name": self.name,
-            "age": self.age,
-            "alive": self.alive,
-            "alliance": self.alliance,
-            "rank": self.rank,
-            "social_opinion": self.social_opinion,
-            "pelt": self.pelt,
-            "color": self.color,
-            "eyes": self.eyes,
-            "first_trait": self.first_trait,
-            "second_trait": self.second_trait,
-            "skill": self.first_skill,
-            "second_skill": self.second_skill,
-            "parents_ids": self.parents_ids,
-            "kits_ids": self.kits_ids
-        }
+                "id": self.id,
+                "type": self.__class__.__name__, 
+                "postfix": self.postfix,
+                "suffix": self.suffix,
+                "name": self.name,
+                "age": self.age,
+                "alive": self.alive,
+                "alliance": self.alliance,
+                "rank": self.rank,
+                "social_opinion": self.social_opinion,
+                "pelt": self.pelt,
+                "color": self.color,
+                "eyes": self.eyes,
+                "first_trait": self.first_trait,
+                "second_trait": self.second_trait,
+                "first_skill": self.first_skill,
+                "second_skill": self.second_skill,
+                "parents_ids": self.parents_ids,
+                "kits_ids": self.kits_ids
+            }
         return data
     
     @classmethod
@@ -281,7 +285,7 @@ class Cat:
     def __repr__(self) -> str:
         """Debug representation"""
         return (
-            f"<{self.__class__.__postfix__} "
+            f"<{self.__class__.__name__} "
             f"id={self.id} "
             f"name='{self.name}' "
             f"alive={self.alive}>"

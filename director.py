@@ -2,7 +2,7 @@ import pygame as pg
 import sys
 from config import WIDTH, HEIGHT, FPS
 from resource_manager import ResourceManager
-
+from cat.cat_manager import CatManager
 class Director:
     """Главный контроллер игры"""
     
@@ -26,6 +26,12 @@ class Director:
         
         self.current_scene = None
         self.switch_scene("menu")
+        cat_manager = CatManager()
+        cat_manager.create_cat("player")
+        cat_manager.get_player
+        cat_manager.create_cat("npc")
+        cat_manager.get_cat(2)
+        cat_manager.save_all()
     
     def _register_scenes(self):
         """Регистрация всех сцен игры"""

@@ -5,7 +5,7 @@ class MC_Cat(Cat):
     def __init__(
             self,
             cat_id: Optional[int] = None, #Эта запись значит что может быть либо int либо None
-            name: str = "",
+            postfix: str = "",
             age: Optional[int] = None,
             alive: Optional[bool] = None,
             alliance: Optional[str] = None,
@@ -24,7 +24,7 @@ class MC_Cat(Cat):
         ):
         super().__init__(
             cat_id=cat_id,
-            name=name,
+            postfix=postfix,
             age=age,
             alive=alive,
             alliance=alliance,
@@ -60,7 +60,7 @@ class MC_Cat(Cat):
         """
         if skill_name in self.skills:
             self.skills[skill_name] += amount
-            print(f"{self.name}: навык '{skill_name}' повышен до {self.skills[skill_name]}")
+            return self.skills[skill_name]
         else:
             raise ValueError(f"Неизвестный навык: {skill_name}")
     

@@ -80,6 +80,16 @@ class CatManager:
         print(f"Создан {cat_type} кот (ID: {cat.id})")
         return cat
     
+    def get_player(self) -> Optional[MC_Cat]:
+        """
+        Получить кота игрока
+        
+        Returns:
+            MC_Cat или None если не создан
+        """
+        if self.player_id:
+            return self.cats.get(self.player_id)
+        return None
     
     def get_cat(self, cat_id: int) -> Optional[Union[Cat, MC_Cat, NPC_Cat]]:
         """
