@@ -68,7 +68,7 @@ class Director:
         # Вызываем on_enter у новой сцены
         self.current_scene.on_enter()
         
-        print(f"→ Переход на сцену: {scene_name}")
+        print(f" Переход на сцену: {scene_name}")
     
     def quit(self):
         """Завершение работы"""

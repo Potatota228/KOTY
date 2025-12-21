@@ -17,13 +17,13 @@ class ResourceManager:
         try:
             with open(self.config_path, 'r', encoding='utf-8') as f:
                 config = json.load(f)
-                print(f"✓ Конфигурация загружена из {self.config_path}")
+                print(f" Конфигурация загружена из {self.config_path}")
                 return config
         except FileNotFoundError:
-            print(f"⚠ Файл {self.config_path} не найден, используются значения по умолчанию")
+            print(f" Файл {self.config_path} не найден, используются значения по умолчанию")
             return self._get_default_config()
         except json.JSONDecodeError as e:
-            print(f"✗ Ошибка парсинга JSON: {e}")
+            print(f" Ошибка парсинга JSON: {e}")
             return self._get_default_config()
     
     def _get_default_config(self):
@@ -46,7 +46,7 @@ class ResourceManager:
         
         # Проверяем наличие ключа в конфиге
         if key not in self.config.get("images", {}):
-            print(f"✗ Ключ '{key}' не найден в images конфига")
+            print(f"Ключ '{key}' не найден в images конфига")
             self.images[key] = self._create_placeholder()
             return self.images[key]
         
@@ -60,7 +60,7 @@ class ResourceManager:
             colorkey = tuple(colorkey)
         
         if not path:
-            print(f"✗ Путь для изображения '{key}' не найден в конфиге")
+            print(f" Путь для изображения '{key}' не найден в конфиге")
             self.images[key] = self._create_placeholder()
             return self.images[key]
         
@@ -71,9 +71,9 @@ class ResourceManager:
             if colorkey:
                 img.set_colorkey(colorkey)
             self.images[key] = img
-            print(f"✓ Загружено изображение: {key} ({path})")
+            print(f" Загружено изображение: {key} ({path})")
         except Exception as e:
-            print(f"✗ Ошибка загрузки {path}: {e}")
+            print(f" Ошибка загрузки {path}: {e}")
             self.images[key] = self._create_placeholder()
         
         return self.images[key]
@@ -91,7 +91,7 @@ class ResourceManager:
         
         # Проверяем наличие ключа в конфиге
         if key not in self.config.get("fonts", {}):
-            print(f"✗ Ключ '{key}' не найден в fonts конфига")
+            print(f" Ключ '{key}' не найден в fonts конфига")
             self.fonts[font_key] = pg.font.Font(None, size)
             return self.fonts[font_key]
         
@@ -100,15 +100,15 @@ class ResourceManager:
         path = font_config.get("path")
         
         if not path:
-            print(f"✗ Путь для шрифта '{key}' не найден в конфиге")
+            print(f" Путь для шрифта '{key}' не найден в конфиге")
             self.fonts[font_key] = pg.font.Font(None, size)
             return self.fonts[font_key]
         
         try:
             self.fonts[font_key] = pg.font.Font(path, size)
-            print(f"✓ Загружен шрифт: {key} размер {size}")
+            print(f" Загружен шрифт: {key} размер {size}")
         except Exception as e:
-            print(f"✗ Ошибка загрузки шрифта {path}: {e}")
+            print(f" Ошибка загрузки шрифта {path}: {e}")
             self.fonts[font_key] = pg.font.Font(None, size)
         
         return self.fonts[font_key]
@@ -120,7 +120,7 @@ class ResourceManager:
         
         # Проверяем наличие ключа в конфиге
         if key not in self.config.get("sounds", {}):
-            print(f"✗ Ключ '{key}' не найден в sounds конфига")
+            print(f" Ключ '{key}' не найден в sounds конфига")
             self.sounds[key] = None
             return None
         
@@ -130,7 +130,7 @@ class ResourceManager:
         volume = sound_config.get("volume", 1.0)
         
         if not path:
-            print(f"✗ Путь для звука '{key}' не найден в конфиге")
+            print(f" Путь для звука '{key}' не найден в конфиге")
             self.sounds[key] = None
             return None
         
@@ -139,9 +139,9 @@ class ResourceManager:
             if volume is not None:
                 sound.set_volume(volume)
             self.sounds[key] = sound
-            print(f"✓ Загружен звук: {key} ({path})")
+            print(f" Загружен звук: {key} ({path})")
         except Exception as e:
-            print(f"✗ Ошибка загрузки звука {path}: {e}")
+            print(f" Ошибка загрузки звука {path}: {e}")
             self.sounds[key] = None
         
         return self.sounds[key]

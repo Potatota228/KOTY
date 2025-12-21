@@ -60,7 +60,7 @@ class InfoBoxScene(Scene):
     
     def on_enter(self):
         """Вызывается при входе в сцену"""
-        print("→ Вход в информационную сцену")
+        print(" Вход в информационную сцену")
         
         # Показываем все элементы
         self.show_group("info")
@@ -68,7 +68,7 @@ class InfoBoxScene(Scene):
     
     def on_exit(self):
         """Вызывается при выходе из сцены"""
-        print("← Выход из информационной сцены")
+        print(" Выход из информационной сцены")
     
     def handle_events(self, events):
         """Обработка событий"""

@@ -99,7 +99,7 @@ class CreationScene(Scene):
             text: введённый текст
         """
         if text.strip():  # Проверяем что текст не пустой
-            print(f"✓ Имя введено: {text}kit")
+            print(f" Имя введено: {text}kit")
             # Переходим на следующую сцену
             # self.director.switch_scene("next_scene", player_name=text)
     
@@ -120,7 +120,7 @@ class CreationScene(Scene):
     
     def on_enter(self):
         """Вызывается при входе в сцену"""
-        print("→ Вход в сцену создания персонажа")
+        print(" Вход в сцену создания персонажа")
         
         # Автоматически ставим фокус на поле ввода
         # Теперь игрок может сразу начать печатать
@@ -133,7 +133,7 @@ class CreationScene(Scene):
     
     def on_exit(self):
         """Вызывается при выходе из сцены"""
-        print("← Выход из сцены создания")
+        print(" Выход из сцены создания")
         # Очищаем поле ввода для следующего раза
         self.input_box.clear()
     
@@ -176,7 +176,7 @@ class CreationScene(Scene):
         if self.bt_continue.draw(screen) and self.bt_continue.enabled:
             # Получаем введённое имя
             name = self.input_box.get_text()
-            print(f"→ Продолжаем с именем: {name}-kit")
+            print(f" Продолжаем с именем: {name}-kit")
             # Здесь переход на следующую сцену
             # self.director.switch_scene("next_scene", player_name=name)
         
