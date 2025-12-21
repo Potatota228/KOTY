@@ -9,6 +9,7 @@
 
 import random
 import json
+from tools.chance import chance
 from pathlib import Path
 from typing import List, Optional, Dict, Any
 
@@ -48,19 +49,49 @@ class Cat:
     ]
 
     TRAITS_1 = [
-
+        "Brave",
+        "Loyal",
+        "Compassionate",
+        "Patient",
+        "Protective",
+        "Honest",
+        "Calm",
+        "Determined",
+        "Gentle",
+        "Observant",
     ]
 
     TRAITS_2 = [
-
+        "Aggressive",
+        "Arrogant",
+        "Jealous",
+        "Impulsive",
+        "Cowardly",
+        "Manipulative",
+        "Cold-hearted",
+        "Stubborn",
+        "Blood-thirsty",
+        "Cruel",
     ]
-     
-    SKILLS_1 = [
 
+    SKILLS_1 = [
+        "Good hunter",
+        "Fast runner",
+        "Strong swimmer",
+        "Knows forest paths well",
+        "Climbs trees easily",
+        "Silent walker",
+        "Good night vision",
+        "Endures cold well",
+        "Quick learner",
+        "Strong sense of smell",
     ]
 
     SKILLS_2 = [
-
+        "Connection to Starclan",
+        "Connection to Dark Forest",
+        "Sees things others cannot see"
+        "Prophesying"
     ]
     
     # Счётчик для генерации уникальных ID
@@ -69,11 +100,14 @@ class Cat:
     def __init__(
         self,
         cat_id: Optional[int] = None, #Эта запись значит что может быть либо int либо None
+        postfix: str = "",
+        suffix: str = "",
         name: str = "",
         age: Optional[int] = None,
         alive: Optional[bool] = None,
         alliance: Optional[str] = None,
         rank: Optional[str] = None,
+        social_opinion: Optional[int] = None,
         pelt: Optional[str] = None,
         color: Optional[str] = None,
         eyes: Optional[str] = None,
@@ -94,9 +128,6 @@ class Cat:
             if cat_id >= Cat._next_id:
                 Cat._next_id = cat_id + 1
         
-        # Имя кота
-        self.name = name
-        
         # Обязательные параметры (если не указаны - генерируем случайно)
         self.pelt = pelt if pelt else random.choice(Cat.PELT_TYPES)
         self.color = color if color else random.choice(Cat.COLORS)
@@ -104,12 +135,29 @@ class Cat:
         self.first_trait = first_trait if first_trait else random.choice(Cat.TRAITS_1)
         self.second_trait = second_trait if second_trait else random.choice(Cat.TRAITS_2)
         self.first_skill = first_skill if first_skill else random.choice(Cat.SKILLS_1)
-        self.second_skill = second_skill if second_skill else random.choice(Cat.SKILLS_2)
+        
+        if second_skill: #Дает второй скилл с шансом 1/15
+            self.second_skill = second_skill 
+        elif chance(15):
+            self.second_skill = random.choice(Cat.SKILLS_2)
+
+        self.social_opinion = social_opinion if social_opinion else random.randint(-100,100)
         self.age = age if age else random.randint(0,180)
-        self.alive = alive if alive else True
+        self.alive = alive if alive else True #bool
         self.alliance = self.set_alliance(alliance)
         self.rank = self.set_rank(rank)
 
+        # Имя кота
+        self.postfix = postfix
+        self.suffix = suffix
+        if "kitten" in self.rank:
+            self.name = f"{postfix}kit"
+        elif "apprentice" in self.rank:
+            self.name = f"{postfix}paw"
+        elif "leader" in self.rank:
+            self.name = f"{postfix} Star"
+        else:
+            self.name = f"{postfix}{suffix}"
         
         # Родственные связи (ID других котов)
         self.parents_ids = parents_ids if parents_ids else []
@@ -135,11 +183,14 @@ class Cat:
         data = {
             "id": self.id,
             "type": self.__class__.__name__,  # Тип класса (Cat, PlayerCat, NPC_Cat)
+            "postfix": self.postfix,
+            "suffix": self.suffix,
             "name": self.name,
             "age": self.age,
             "alive": self.alive,
             "alliance": self.alliance,
             "rank": self.rank,
+            "social_opinion": self.social_opinion,
             "pelt": self.pelt,
             "color": self.color,
             "eyes": self.eyes,
@@ -165,11 +216,14 @@ class Cat:
         """
         return cls(
             cat_id=data.get("id"),
+            postfix=data.get("postfix"),
+            suffix=data.get("suffix"),
             name=data.get("name"),
             age=data.get("age"),
             alive=data.get("alive"),
             alliance=data.get("alliance"),
             rank=data.get("rank"),
+            social_opinion=data.get("social_opinion"),
             pelt=data.get("pelt"),
             color=data.get("color"),
             eyes=data.get("eyes"),
@@ -227,7 +281,7 @@ class Cat:
     def __repr__(self) -> str:
         """Debug representation"""
         return (
-            f"<{self.__class__.__name__} "
+            f"<{self.__class__.__postfix__} "
             f"id={self.id} "
             f"name='{self.name}' "
             f"alive={self.alive}>"
